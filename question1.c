@@ -21,7 +21,7 @@ typedef struct proc_tree {
     struct proc_tree *right;
 } proc_tree;
 
-/* Create a new tree node */
+/* Create node */
 proc_tree *create_node(proc p) {
     proc_tree *node = (proc_tree *)malloc(sizeof(proc_tree));
     if (node == NULL) {
@@ -35,31 +35,25 @@ proc_tree *create_node(proc p) {
     return node;
 }
 
-/* Find a node in the tree by process name */
+/* Find node by name */
 proc_tree *find_node(proc_tree *root, const char *name) {
-    if (root == NULL) {
-        return NULL;
-    }
+    if (root == NULL) return NULL;
 
     if (strcmp(root->data.name, name) == 0) {
         return root;
     }
 
     proc_tree *found = find_node(root->left, name);
-    if (found != NULL) {
-        return found;
-    }
+    if (found != NULL) return found;
 
     return find_node(root->right, name);
 }
 
-/* Add child to parent in binary tree */
+/* Add child */
 bool add_child(proc_tree *root, const char *parent_name, proc child_data) {
     proc_tree *parent_node = find_node(root, parent_name);
 
-    if (parent_node == NULL) {
-        return false;
-    }
+    if (parent_node == NULL) return false;
 
     if (parent_node->left == NULL) {
         parent_node->left = create_node(child_data);
@@ -73,28 +67,15 @@ bool add_child(proc_tree *root, const char *parent_name, proc child_data) {
     }
 }
 
-/* Print tree recursively */
+/* CLEAN PRINT FUNCTION (what your TA wants) */
 void print_tree(proc_tree *root, int level) {
-    if (root == NULL) {
-        return;
-    }
+    if (root == NULL) return;
 
     for (int i = 0; i < level; i++) {
-        printf("    ");
+        printf("  ");  // indentation
     }
 
-    printf("Process Name: %s | Parent: %s | Priority: %d | Memory: %d MB\n",
-           root->data.name,
-           root->data.parent,
-           root->data.priority,
-           root->data.memory);
-
-    if (root->left != NULL || root->right != NULL) {
-        for (int i = 0; i < level; i++) {
-            printf("    ");
-        }
-        printf("Children of %s:\n", root->data.name);
-    }
+    printf("%s\n", root->data.name);
 
     print_tree(root->left, level + 1);
     print_tree(root->right, level + 1);
@@ -102,9 +83,7 @@ void print_tree(proc_tree *root, int level) {
 
 /* Free memory */
 void free_tree(proc_tree *root) {
-    if (root == NULL) {
-        return;
-    }
+    if (root == NULL) return;
 
     free_tree(root->left);
     free_tree(root->right);
@@ -122,11 +101,9 @@ int main(void) {
     int count = 0;
     char line[1024];
 
-    /* Read file line by line */
+    /* Read file */
     while (fgets(line, sizeof(line), file) != NULL) {
         proc p;
-
-        /* Remove newline if it exists */
         line[strcspn(line, "\n")] = '\0';
 
         if (sscanf(line, "%255[^,],%255[^,],%d,%d",
@@ -138,14 +115,13 @@ int main(void) {
     fclose(file);
 
     if (count == 0) {
-        printf("No process data found in file.\n");
+        printf("No data found.\n");
         return 1;
     }
 
     proc_tree *root = NULL;
 
-    /* Find root process
-       Assumption: root parent is "none" or "NULL" or "-" */
+    /* Find root */
     for (int i = 0; i < count; i++) {
         if (strcmp(processes[i].parent, "none") == 0 ||
             strcmp(processes[i].parent, "NULL") == 0 ||
@@ -156,14 +132,11 @@ int main(void) {
     }
 
     if (root == NULL) {
-        /* If no special root marker is found, use first line as root */
         root = create_node(processes[0]);
     }
 
-    /* Add remaining processes to tree */
     bool added[100] = {false};
 
-    /* Mark root as added */
     for (int i = 0; i < count; i++) {
         if (strcmp(root->data.name, processes[i].name) == 0) {
             added[i] = true;
@@ -171,7 +144,6 @@ int main(void) {
         }
     }
 
-    /* Keep trying until all possible nodes are inserted */
     bool progress = true;
     while (progress) {
         progress = false;
