@@ -1,0 +1,7 @@
+none,init,1,100
+init,bash,2,50
+init,systemd,3,80
+bash,chrome,4,200
+bash,code,5,300
+systemd,networkd,2,60
+systemd,logind,2,40
