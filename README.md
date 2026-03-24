@@ -23,3 +23,11 @@ A Stack is a Last-in-first-out data structure (LIFO). It is also considered a li
 
 ### Linked List
 A linked list is a type of data structure comprised of nodes and pointers arranged in a list. In linked lists a node represents 2 things the value and the memory address of the next node in the list.
+
+## 4. Explain what a binary tree is, what are some common operations of a binary tree?
+
+A binary tree is a data structure made up of nodes that can have at most 2 children; a left child and a right child. Each node holds data and the pointers to the children nodes. Common operations associeated with a binary tree are insertion: add a new node, Deletion: remove a node, Search: find a value, traversal: visit nodes in order, find height: measures how many nodes "tall" the tress it, and finally find min and max, this locates the smallest and largest value in the binary tree
+
+## 5. Explain what a hash table (dictionary) is, what are common operations of a hash table?
+
+A hash table is a type of data strcuture that stores data in the format of key value pairs. A key value pair is made of the key which is the label attachted to the value which is the data connected to it. The common opperations for a hash table are, insert: adding a key value pair, Search: looking up a value with its key, Delete: removing a key value pair, Update: which is updating the information for an existing key value pair.
