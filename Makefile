@@ -1,12 +1,9 @@
-CC      := gcc
-CFLAGS  := -Wall -Wextra -std=c11 -pedantic
-
 .PHONY: all clean
 
 all:
-	$(CC) $(CFLAGS) -o process sigtrap.c
-	$(CC) $(CFLAGS) -o question1 question1.c
-	$(CC) $(CFLAGS) -o question2 question2.c
+	gcc sigtrap.c -o process
+	gcc question1.c -o question1
+	gcc question2.c -o question2
 
 clean:
 	rm -f process question1 question2
