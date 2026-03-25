@@ -1,3 +1,16 @@
+# How to Run:
+Please use the following command:
+```
+make all
+```
+If this fails please execute the following:
+```
+gcc sigtrap.c -o process
+gcc question1.c -o question1
+gcc question2.c -o question2
+```
+
+
 # Conceptual Questions
 ## 1. What is an Abstract Data Type (ADT)?
 
